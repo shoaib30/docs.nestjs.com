@@ -4,6 +4,8 @@ TypeScript's metadata reflection system has several limitations which make it im
 
 > info **Hint** This plugin is **opt-in**. If you prefer, you can declare all decorators manually, or only specific decorators where you need them.
 
+
+
 #### Overview
 
 The Swagger plugin will automatically:
@@ -52,6 +54,8 @@ export class CreateUserDto {
   isEnabled?: boolean = true;
 }
 ```
+
+> info **Hint** When using `PartialType, OmitType, PickType, IntersectionType` in dtos import them from `@nestjs/swagger` instead of `@nestjs/mapped-types` for the plugin to pick up the schema
 
 The plugin adds appropriate decorators on the fly based on the **Abstract Syntax Tree**. Thus you won't have to struggle with `@ApiProperty` decorators scattered throughout the code.
 
@@ -183,6 +187,23 @@ export interface PluginOptions {
     <td>If set to true, plugin will generate descriptions and example values for properties based on comments</td>
   </tr>
 </table>
+
+On the first run and when ever plugin options are changed. Delete `/dist` folder and build the application using
+
+```bash
+$ nest build
+```
+
+Or you can configure `package.json` with the following scripts
+```json
+"prebuild": "rimraf dist",
+"build": "nest build",
+```
+and run it using
+```bash
+$ npm run build
+```
+
 
 If you don't use the CLI but instead have a custom `webpack` configuration, you can use this plugin in combination with `ts-loader`:
 
